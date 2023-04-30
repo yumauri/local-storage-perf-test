@@ -1,0 +1,18 @@
+{
+  "name": "local-storage-perf-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "vite",
+    "test-persist": "VITE_PERSIST=1 vite"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^4.3.2"
+  },
+  "dependencies": {
+    "effector": "^22.8.2",
+    "effector-storage": "^5.0.1"
+  }
+}
