@@ -5,12 +5,15 @@ import {
   sample,
   type Store,
 } from "effector";
-import { persist } from "effector-storage/local";
+import { persist as persistLocal } from "effector-storage/local";
+import { persist as persistMemory } from "effector-storage/memory";
 
-const PERSIST = /1|yes|true/i.test(import.meta.env.VITE_PERSIST);
-const SYNC = PERSIST && !/0|no|false/i.test(import.meta.env.VITE_SYNC);
-console.log("🧳 persist:", PERSIST);
-console.log("⏱ sync:", SYNC);
+const LOCAL = /1|yes|true/i.test(import.meta.env.VITE_LOCAL);
+const MEMORY = !LOCAL && /1|yes|true/i.test(import.meta.env.VITE_MEMORY);
+const SYNC = LOCAL && !/0|no|false/i.test(import.meta.env.VITE_SYNC);
+
+console.log("🧳 persist:", LOCAL ? "localStorage" : MEMORY ? "memory" : "none");
+if (LOCAL) console.log("⏱ sync:", SYNC);
 
 export type Dot = {
   x: number;
@@ -44,8 +47,10 @@ const generate = createEffect<
     const dot = newDot({ w, h, r });
     dots.push(dot);
 
-    if (PERSIST) {
-      persist({ store: dot, key: `dot-${i}`, sync: SYNC });
+    if (LOCAL) {
+      persistLocal({ store: dot, key: `dot-${i}`, sync: SYNC });
+    } else if (MEMORY) {
+      persistMemory({ store: dot, key: `dot-${i}` });
     }
   }
 });

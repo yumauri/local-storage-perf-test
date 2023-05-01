@@ -27,10 +27,22 @@ Run page without using `localStorage`:
 pnpm dev
 ```
 
-Run page with using `localStorage` (each circle's store is persisted, and each update is saved synchronously to the `localStorage`):
+Run page with using `persist` in memory (each circle's store state is persisted synchronously in memory):
 
 ```
-pnpm dev-persist
+pnpm dev-memory
+```
+
+Run page with using `localStorage` (each circle's store state is persisted synchronously to the `localStorage`):
+
+```
+pnpm dev-local
+```
+
+You can also run page without syncronization (`persist` will not add listeners to `'storage'` event), but I didn't saw any difference in performance with or without syncronization, so I didn't include it in the table below:
+
+```
+pnpm dev-local-nosync
 ```
 
 ## Results
@@ -43,25 +55,25 @@ On my MacBook Pro (13-inch, 2020)
 
 I got the following results (`↗` highest `↘` lowest, round to integer):
 
-| circles | without `persist` | with `persist` |
-| ------- | ----------------- | -------------- |
-| 100     | `↗` 60 `↘` 59     | `↗` 60 `↘` 59  |
-| 200     | `↗` 60 `↘` 59     | `↗` 58 `↘` 45  |
-| 300     | `↗` 60 `↘` 59     | `↗` 48 `↘` 43  |
-| 400     | `↗` 60 `↘` 59     | `↗` 39 `↘` 36  |
-| 500     | `↗` 60 `↘` 59     | `↗` 33 `↘` 30  |
-| 600     | `↗` 60 `↘` 59     | `↗` 30 `↘` 27  |
-| 700     | `↗` 60 `↘` 59     | `↗` 26 `↘` 22  |
-| 800     | `↗` 60 `↘` 59     | `↗` 23 `↘` 21  |
-| 900     | `↗` 60 `↘` 57     | `↗` 21 `↘` 19  |
-| 1000    | `↗` 55 `↘` 50     | `↗` 20 `↘` 18  |
-| 1100    | `↗` 52 `↘` 48     | `↗` 18 `↘` 16  |
-| 1200    | `↗` 50 `↘` 45     | `↗` 15 `↘` 13  |
-| 1300    | `↗` 48 `↘` 44     | `↗` 15 `↘` 13  |
-| 1400    | `↗` 46 `↘` 42     | `↗` 15 `↘` 13  |
-| 1500    | `↗` 45 `↘` 40     | `↗` 14 `↘` 13  |
-| 1600    | `↗` 43 `↘` 40     | `↗` 13 `↘` 13  |
-| 1700    | `↗` 40 `↘` 38     | `↗` 13 `↘` 12  |
-| 1800    | `↗` 39 `↘` 36     | `↗` 12 `↘` 12  |
-| 1900    | `↗` 37 `↘` 33     | `↗` 12 `↘` 12  |
-| 2000    | `↗` 37 `↘` 32     | `↗` 11 `↘` 10  |
+| circles | no `persist`  | `persist` in memory | `persist` in `localStorage` |
+| ------- | ------------- | ------------------- | --------------------------- |
+| 100     | `↗` 60 `↘` 59 | `↗` 60 `↘` 59       | `↗` 60 `↘` 59               |
+| 200     | `↗` 60 `↘` 59 | `↗` 60 `↘` 59       | `↗` 58 `↘` 45               |
+| 300     | `↗` 60 `↘` 59 | `↗` 60 `↘` 59       | `↗` 48 `↘` 43               |
+| 400     | `↗` 60 `↘` 59 | `↗` 60 `↘` 59       | `↗` 39 `↘` 36               |
+| 500     | `↗` 60 `↘` 59 | `↗` 60 `↘` 57       | `↗` 33 `↘` 30               |
+| 600     | `↗` 60 `↘` 59 | `↗` 53 `↘` 50       | `↗` 30 `↘` 27               |
+| 700     | `↗` 60 `↘` 59 | `↗` 49 `↘` 47       | `↗` 26 `↘` 22               |
+| 800     | `↗` 60 `↘` 59 | `↗` 45 `↘` 43       | `↗` 23 `↘` 21               |
+| 900     | `↗` 60 `↘` 57 | `↗` 42 `↘` 37       | `↗` 21 `↘` 19               |
+| 1000    | `↗` 55 `↘` 50 | `↗` 39 `↘` 37       | `↗` 20 `↘` 18               |
+| 1100    | `↗` 52 `↘` 48 | `↗` 36 `↘` 34       | `↗` 18 `↘` 16               |
+| 1200    | `↗` 50 `↘` 45 | `↗` 34 `↘` 33       | `↗` 15 `↘` 13               |
+| 1300    | `↗` 48 `↘` 44 | `↗` 32 `↘` 30       | `↗` 15 `↘` 13               |
+| 1400    | `↗` 46 `↘` 42 | `↗` 31 `↘` 30       | `↗` 15 `↘` 13               |
+| 1500    | `↗` 45 `↘` 40 | `↗` 29 `↘` 28       | `↗` 14 `↘` 13               |
+| 1600    | `↗` 43 `↘` 40 | `↗` 27 `↘` 26       | `↗` 13 `↘` 13               |
+| 1700    | `↗` 40 `↘` 38 | `↗` 26 `↘` 25       | `↗` 13 `↘` 12               |
+| 1800    | `↗` 39 `↘` 36 | `↗` 25 `↘` 24       | `↗` 12 `↘` 12               |
+| 1900    | `↗` 37 `↘` 33 | `↗` 24 `↘` 23       | `↗` 12 `↘` 12               |
+| 2000    | `↗` 37 `↘` 32 | `↗` 22 `↘` 21       | `↗` 11 `↘` 10               |

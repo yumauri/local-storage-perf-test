@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev-persist": "VITE_PERSIST=1 vite",
-    "dev-persist-nosync": "VITE_PERSIST=1 VITE_SYNC=0 vite"
+    "dev-local": "VITE_LOCAL=1 vite",
+    "dev-local-nosync": "VITE_LOCAL=1 VITE_SYNC=0 vite",
+    "dev-memory": "VITE_MEMORY=1 vite"
   },
   "devDependencies": {
     "typescript": "^5.0.2",
