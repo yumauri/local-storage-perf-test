@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "vite",
-    "test-persist": "VITE_PERSIST=1 vite"
+    "dev": "vite",
+    "dev-persist": "VITE_PERSIST=1 vite",
+    "dev-persist-nosync": "VITE_PERSIST=1 VITE_SYNC=0 vite"
   },
   "devDependencies": {
     "typescript": "^5.0.2",

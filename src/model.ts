@@ -8,7 +8,9 @@ import {
 import { persist } from "effector-storage/local";
 
 const PERSIST = /1|yes|true/i.test(import.meta.env.VITE_PERSIST);
+const SYNC = PERSIST && !/0|no|false/i.test(import.meta.env.VITE_SYNC);
 console.log("🧳 persist:", PERSIST);
+console.log("⏱ sync:", SYNC);
 
 export type Dot = {
   x: number;
@@ -43,7 +45,7 @@ const generate = createEffect<
     dots.push(dot);
 
     if (PERSIST) {
-      persist({ store: dot, key: `dot-${i}` });
+      persist({ store: dot, key: `dot-${i}`, sync: SYNC });
     }
   }
 });

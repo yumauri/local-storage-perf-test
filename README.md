@@ -24,13 +24,13 @@ Using "Rendering" tab in Chrome DevTools you can enable "Frame Rendering Stats" 
 Run page without using `localStorage`:
 
 ```
-pnpm test
+pnpm dev
 ```
 
 Run page with using `localStorage` (each circle's store is persisted, and each update is saved synchronously to the `localStorage`):
 
 ```
-pnpm test-persist
+pnpm dev-persist
 ```
 
 ## Results
