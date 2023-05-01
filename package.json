@@ -4,17 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev-local": "VITE_LOCAL=1 vite",
-    "dev-local-nosync": "VITE_LOCAL=1 VITE_SYNC=0 vite",
-    "dev-memory": "VITE_MEMORY=1 vite"
+    "reference": "vite",
+    "nil": "VITE_NIL=1 vite",
+    "memory": "VITE_MEMORY=1 vite",
+    "local": "VITE_LOCAL=1 vite",
+    "local-nosync": "VITE_LOCAL=1 VITE_SYNC=0 vite"
   },
   "devDependencies": {
-    "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "@types/stats.js": "^0.17.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.3"
   },
   "dependencies": {
     "effector": "^22.8.2",
-    "effector-storage": "^5.0.1"
+    "effector-storage": "^5.0.1",
+    "stats.js": "^0.17.0"
   }
 }

@@ -1,4 +1,19 @@
+import Stats from "stats.js";
 import { init, dots, step, add } from "./model";
+
+const fps = new Stats();
+fps.dom.style.position = "absolute";
+fps.dom.style.top = "5px";
+fps.dom.style.left = "5px";
+fps.showPanel(0);
+document.body.appendChild(fps.dom);
+
+const ms = new Stats();
+ms.showPanel(1);
+ms.dom.style.position = "absolute";
+ms.dom.style.top = "5px";
+ms.dom.style.left = "90px";
+document.body.appendChild(ms.dom);
 
 const W: number = 800;
 const H: number = 800;
@@ -21,13 +36,18 @@ function drawDot(x: number, y: number, r: number, color: string) {
  * Render scene
  */
 function render(now: DOMHighResTimeStamp) {
+  fps.begin();
   ctx.clearRect(0, 0, W, H);
   for (const dot of dots) {
     const { x, y, r, color } = dot.getState();
     drawDot(x, y, r, color);
   }
 
+  ms.begin();
   step(now);
+  ms.end();
+
+  fps.end();
   requestAnimationFrame(render);
 }
 

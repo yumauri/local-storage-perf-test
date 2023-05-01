@@ -5,14 +5,20 @@ import {
   sample,
   type Store,
 } from "effector";
-import { persist as persistLocal } from "effector-storage/local";
+import { persist } from "effector-storage";
+import { nil } from "effector-storage/nil";
 import { persist as persistMemory } from "effector-storage/memory";
+import { persist as persistLocal } from "effector-storage/local";
 
+const NIL = /1|yes|true/i.test(import.meta.env.VITE_NIL);
+const MEMORY = /1|yes|true/i.test(import.meta.env.VITE_MEMORY);
 const LOCAL = /1|yes|true/i.test(import.meta.env.VITE_LOCAL);
-const MEMORY = !LOCAL && /1|yes|true/i.test(import.meta.env.VITE_MEMORY);
 const SYNC = LOCAL && !/0|no|false/i.test(import.meta.env.VITE_SYNC);
 
-console.log("🧳 persist:", LOCAL ? "localStorage" : MEMORY ? "memory" : "none");
+console.log(
+  "🧳 mode:",
+  NIL ? "nil" : MEMORY ? "memory" : LOCAL ? "local" : "reference"
+);
 if (LOCAL) console.log("⏱ sync:", SYNC);
 
 export type Dot = {
@@ -47,10 +53,19 @@ const generate = createEffect<
     const dot = newDot({ w, h, r });
     dots.push(dot);
 
-    if (LOCAL) {
-      persistLocal({ store: dot, key: `dot-${i}`, sync: SYNC });
-    } else if (MEMORY) {
+    // use `nil` adapter
+    if (NIL) {
+      persist({ store: dot, key: `dot-${i}`, adapter: nil("nil") });
+    }
+
+    // use `memory` adapter
+    else if (MEMORY) {
       persistMemory({ store: dot, key: `dot-${i}` });
+    }
+
+    // use `local` adapter
+    else if (LOCAL) {
+      persistLocal({ store: dot, key: `dot-${i}`, sync: SYNC });
     }
   }
 });

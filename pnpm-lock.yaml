@@ -7,13 +7,19 @@ dependencies:
   effector-storage:
     specifier: ^5.0.1
     version: 5.0.1(effector@22.8.2)
+  stats.js:
+    specifier: ^0.17.0
+    version: 0.17.0
 
 devDependencies:
+  '@types/stats.js':
+    specifier: ^0.17.0
+    version: 0.17.0
   typescript:
-    specifier: ^5.0.2
+    specifier: ^5.0.4
     version: 5.0.4
   vite:
-    specifier: ^4.3.2
+    specifier: ^4.3.3
     version: 4.3.3
 
 packages:
@@ -216,6 +222,10 @@ packages:
     dev: true
     optional: true
 
+  /@types/stats.js@0.17.0:
+    resolution: {integrity: sha512-9w+a7bR8PeB0dCT/HBULU2fMqf6BAzvKbxFboYhmDtDkKPiyXYbjoe2auwsXlEFI7CFNMF1dCv3dFH5Poy9R1w==}
+    dev: true
+
   /effector-storage@5.0.1(effector@22.8.2):
     resolution: {integrity: sha512-XJQTLEKUoO8vZROyxtY1J6SfK5Z0YdDGcwEYjhQNOiMtE6HcdJ9cagiCK2r0unsq8eEIS2GzB8cWPrIWJRepxA==}
     peerDependencies:
@@ -298,6 +308,10 @@ packages:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /stats.js@0.17.0:
+    resolution: {integrity: sha512-hNKz8phvYLPEcRkeG1rsGmV5ChMjKDAWU7/OJJdDErPBNChQXxCo3WZurGpnWc6gZhAzEPFad1aVgyOANH1sMw==}
+    dev: false
 
   /typescript@5.0.4:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
