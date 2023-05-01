@@ -139,3 +139,66 @@ I got the following results (highest average, ceil to integer):
 | 2000    | 56        | 6   | 6      | 5     |
 
 <img src="./screenshots/graph-safari.png">
+
+## Why `persist` makes so big overhead?
+
+Looking at the results you might wonder: "Why `persist` with `nil` adapter (which doing nothing) makes such big overhead? Should I use it at all then?"
+
+Wait, let me explain.
+
+Even while `nil` adapter is doing nothing, `persist` is doing some work. For example, it should synchronize different stores, persisted with the same `key`, even with `nil` adapter, this is by design. To do its work, `persist` creates bunch of units and bunch of connections between them. How many? Let's find out.
+
+But first, I want to make a note, that you probably should not persist hundreds and thousands of stores in `localStorage`. If you do so, maybe you are doing something wrong. And I suggest you to check [`effector-localstorage`](https://github.com/ilyalesik/effector-localstorage) library, which creates zero overhead (aside from working with `localStorage`), because it doesn't create any effector units at all.
+
+Ok, to the numbers.
+
+In the version 5.0.1 in this test each `persist` call creates
+
+- 1 store
+- 1 cleanup node
+- 2 effects
+- 7 events
+
+And connects them using
+
+- 1 region
+- 2 samples
+- 1 guard
+- 4 forwards
+
+Is it too many? I don't think so. But how many units declarations is that?
+
+Using new [Inspect API](https://effector.dev/docs/api/effector/inspect) it is possible to count exactly, how many units were created (or "declared"), and how many "computations" effector kernel is making on each animation step.
+
+For each circle `persist` makes 41 declarations.
+
+Not too much, but with increasing numbers this grows drastically:
+
+| circles | declarations (reference) | computations (reference) | declarations (`persist`) | computations (`persist`) |
+| ------- | ------------------------ | ------------------------ | ------------------------ | ------------------------ |
+| 100     | 321                      | 301                      | 4121                     | 5001                     |
+| 200     | 621                      | 601                      | 8221                     | 10001                    |
+| 300     | 921                      | 901                      | 12321                    | 15001                    |
+| 400     | 1221                     | 1201                     | 16421                    | 20001                    |
+| 500     | 1521                     | 1501                     | 20521                    | 25001                    |
+| 600     | 1821                     | 1801                     | 24621                    | 30001                    |
+| 700     | 2121                     | 2101                     | 28721                    | 35001                    |
+| 800     | 2421                     | 2401                     | 32821                    | 40001                    |
+| 900     | 2721                     | 2701                     | 36921                    | 45001                    |
+| 1000    | 3021                     | 3001                     | 41021                    | 50001                    |
+| 1100    | 3321                     | 3301                     | 45121                    | 55001                    |
+| 1200    | 3621                     | 3601                     | 49221                    | 60001                    |
+| 1300    | 3921                     | 3901                     | 53321                    | 65001                    |
+| 1400    | 4221                     | 4201                     | 57421                    | 70001                    |
+| 1500    | 4521                     | 4501                     | 61521                    | 75001                    |
+| 1600    | 4821                     | 4801                     | 65621                    | 80001                    |
+| 1700    | 5121                     | 5101                     | 69721                    | 85001                    |
+| 1800    | 5421                     | 5401                     | 73821                    | 90001                    |
+| 1900    | 5721                     | 5701                     | 77921                    | 95001                    |
+| 2000    | 6021                     | 6001                     | 82021                    | 100001                   |
+
+So, with `persist`, applied to the each circle state, effector kernel have to make ×17 "computations", no surprise that performance become worse.
+
+In `persist`'s defense, instead of excuse, I want to point out, that this test was not aimed to check `persist` performance, but impact of saving data synchronously to the `localStorage`. As I mentioned earlier, you probably should not persist hundreds and thousands of stores in `localStorage`. But with huge numbers it is better to see impact, which I want to see. That is why test is designed this way.
+
+Do not judge `effector-storage` by it :)

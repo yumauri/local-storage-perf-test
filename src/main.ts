@@ -1,3 +1,4 @@
+// import { declarations, start, stop } from "./inspect";
 import Stats from "stats.js";
 import { init, dots, step, add } from "./model";
 
@@ -49,6 +50,7 @@ function render(now: DOMHighResTimeStamp) {
 
   fps.end();
   requestAnimationFrame(render);
+  // stop();
 }
 
 /**
@@ -66,9 +68,13 @@ function main() {
 
   canvas.addEventListener("mousedown", function () {
     add({ w: W, h: H, r: 5 });
+    // console.log("declarations count:", declarations);
+    // start();
   });
 
   init({ w: W, h: H, r: 5 });
+  // console.log("declarations count:", declarations);
+  // start();
   requestAnimationFrame(render);
 }
 
