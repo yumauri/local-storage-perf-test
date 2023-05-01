@@ -84,6 +84,8 @@ I got the following results (highest average, ceil to integer):
 | 1900    | 31        | 15  | 15     | 8     |
 | 2000    | 31        | 15  | 15     | 7     |
 
+<img src="./screenshots/graph-chrome.png">
+
 ### Mozilla Firefox version 112.0.2 (64-bit)
 
 | circles | reference | nil | memory | local |
@@ -109,6 +111,8 @@ I got the following results (highest average, ceil to integer):
 | 1900    | 60        | 11  | 11     | 7     |
 | 2000    | 60        | 10  | 10     | 7     |
 
+<img src="./screenshots/graph-firefox.png">
+
 ### Safari version 16.4.1 (17615.1.26.101.10, 17615)
 
 | circles | reference | nil | memory | local |
@@ -133,3 +137,5 @@ I got the following results (highest average, ceil to integer):
 | 1800    | 60        | 7   | 7      | 6     |
 | 1900    | 59        | 6   | 6      | 6     |
 | 2000    | 56        | 6   | 6      | 5     |
+
+<img src="./screenshots/graph-safari.png">
