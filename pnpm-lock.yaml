@@ -6,7 +6,7 @@ dependencies:
     version: 22.8.2
   effector-storage:
     specifier: ^5.0.1
-    version: 5.0.1(effector@22.8.2)
+    version: link:../effector-storage/build
   stats.js:
     specifier: ^0.17.0
     version: 0.17.0
@@ -225,14 +225,6 @@ packages:
   /@types/stats.js@0.17.0:
     resolution: {integrity: sha512-9w+a7bR8PeB0dCT/HBULU2fMqf6BAzvKbxFboYhmDtDkKPiyXYbjoe2auwsXlEFI7CFNMF1dCv3dFH5Poy9R1w==}
     dev: true
-
-  /effector-storage@5.0.1(effector@22.8.2):
-    resolution: {integrity: sha512-XJQTLEKUoO8vZROyxtY1J6SfK5Z0YdDGcwEYjhQNOiMtE6HcdJ9cagiCK2r0unsq8eEIS2GzB8cWPrIWJRepxA==}
-    peerDependencies:
-      effector: '>=21.0.0'
-    dependencies:
-      effector: 22.8.2
-    dev: false
 
   /effector@22.8.2:
     resolution: {integrity: sha512-Utl/gT/wDtcnVKDOToS4xuGDt1INzhsGF5TGnDGdbSS6BbV0C2JPAjo8tBi+0ZK1M5Gj8sEW/WFuv+RoH2V+oQ==}

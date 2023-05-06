@@ -8,7 +8,9 @@
     "nil": "VITE_NIL=1 vite",
     "memory": "VITE_MEMORY=1 vite",
     "local": "VITE_LOCAL=1 vite",
-    "local-nosync": "VITE_LOCAL=1 VITE_SYNC=0 vite"
+    "local-nosync": "VITE_LOCAL=1 VITE_SYNC=0 vite",
+    "local-timeout": "VITE_LOCAL=1 VITE_TIMEOUT=100 vite",
+    "local-big-timeout": "VITE_LOCAL=1 VITE_TIMEOUT=1000 vite"
   },
   "devDependencies": {
     "@types/stats.js": "^0.17.0",

@@ -14,12 +14,14 @@ const NIL = /1|yes|true/i.test(import.meta.env.VITE_NIL);
 const MEMORY = /1|yes|true/i.test(import.meta.env.VITE_MEMORY);
 const LOCAL = /1|yes|true/i.test(import.meta.env.VITE_LOCAL);
 const SYNC = LOCAL && !/0|no|false/i.test(import.meta.env.VITE_SYNC);
+const TIMEOUT = (LOCAL && parseInt(import.meta.env.VITE_TIMEOUT)) || undefined;
 
 console.log(
   "🧳 mode:",
   NIL ? "nil" : MEMORY ? "memory" : LOCAL ? "local" : "reference"
 );
-if (LOCAL) console.log("⏱ sync:", SYNC);
+if (LOCAL) console.log("🔄 sync:", SYNC);
+if (LOCAL) console.log("⏱ timeout:", TIMEOUT);
 
 export type Dot = {
   x: number;
@@ -55,7 +57,11 @@ const generate = createEffect<
 
     // use `nil` adapter
     if (NIL) {
-      persist({ store: dot, key: `dot-${i}`, adapter: nil("nil") });
+      persist({
+        store: dot,
+        key: `dot-${i}`,
+        adapter: nil({ keyArea: "nil" }),
+      });
     }
 
     // use `memory` adapter
@@ -65,7 +71,12 @@ const generate = createEffect<
 
     // use `local` adapter
     else if (LOCAL) {
-      persistLocal({ store: dot, key: `dot-${i}`, sync: SYNC });
+      persistLocal({
+        store: dot,
+        key: `dot-${i}`,
+        sync: SYNC,
+        timeout: TIMEOUT ? TIMEOUT + Math.random() * 30 - 15 : undefined,
+      });
     }
   }
 });
